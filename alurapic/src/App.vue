@@ -1,9 +1,11 @@
 <template>
   <div>
     <h1>{{ titulo }}</h1>
-
-    <img v-bind:src="foto.url" v-bind:alt="foto.titulo">
-
+    
+    <ul>
+      <li><img v-bind:src="foto.url" v-bind:alt="foto.titulo"></li>
+    </ul>
+     
   </div>
 </template>
 
@@ -11,11 +13,18 @@
 export default {
   data() {
     return{
+      
       titulo: 'Alurapic',
-      foto: {
-        url: 'http://www.farejadordecaes.com.br/wp-content/uploads/o-que-saber-antes-de-comprar-cachorro-01.png',
-        titulo: 'Cachorro'
-      }
+      fotos: [
+        {
+          url: 'http://www.farejadordecaes.com.br/wp-content/uploads/o-que-saber-antes-de-comprar-cachorro-01.png',
+          titulo: 'Cachorro'
+        },
+        {
+          url: 'http://www.farejadordecaes.com.br/wp-content/uploads/o-que-saber- antes-de-comprar-cachorro-01.png',
+          titulo: 'Gato'
+        }
+      ] 
     }
   }
 }
