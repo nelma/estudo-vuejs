@@ -23,8 +23,7 @@ export default {
   created() {
     //alert("Criei o componente");
 
-    let promise = this.$http.get('http://localhost:3000/v1/fotos');
-    promise
+    this.$http.get('http://localhost:3000/v1/fotos')
       .then(res => res.json())
       .then(fotinhos => this.fotos = fotinhos, err => console.log(err));
   }
