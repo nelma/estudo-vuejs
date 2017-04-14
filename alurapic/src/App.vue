@@ -1,13 +1,17 @@
 <template>
 
   <div class="corpo">
+
     <h1 class="centralizado">{{ titulo }}</h1>
     
+    <input type="search" class="filtro" v-on:input=" filtro = $event.target.value" placeholder="filtre pelo título da foto">
+    {{ filtro }}
+
     <ul class="lista-fotos">
-      <li class="lista-fotos-item" v-for="foto of fotos">
+      <li class="lista-fotos-item" v-for="foto of fotosComFiltro">
           
           <meu-painel :titulo="foto.titulo">
-            <img class="imagem-responsiva" v-bind:src="foto.url" v-bind:alt="foto.titulo">
+            <imagem-responsiva :url="foto.url" :titulo="foto.titulo" />
           </meu-painel>
                
       </li>
@@ -18,19 +22,43 @@
 
 <script>
 import Painel from './components/shared/painel/Painel.vue';
+import ImagemResponsiva from './components/shared/imagem-responsiva/ImagemResponsiva.vue';
 
 export default {
   components: {
-    'meu-painel': Painel
+    'meu-painel': Painel,
+    'imagem-responsiva': ImagemResponsiva
   },
 
   data() {
     return{
       
       titulo: 'Alurapic',
-      fotos: [] 
+      fotos: [],
+      filtro: ''
     }
   },
+
+  computed: {
+    fotosComFiltro() {
+      let filtro = this.filtro;
+      let fotos = this.fotos;
+
+      if(filtro) {
+        //filtra a lista
+
+        //cria expressao com valor do filtro
+        let exp = new RegExp(filtro.trim(), 'i');
+
+        //retorna fotos que condizem a expressao
+        return fotos.filter(foto => exp.test(foto.titulo));
+      } else {
+        //se estiver vazio, retorna a lista toda
+        return fotos;
+      }
+    }
+  },
+
   created() {
     //alert("Criei o componente");
 
@@ -60,7 +88,10 @@ export default {
       display: inline-block;
     }
 
-    .imagem-responsiva {
-      width: 100%
-    }
+    /* código anterior omitido */
+
+  .filtro {
+    display: block;
+    width: 100%;
+  }
 </style>
