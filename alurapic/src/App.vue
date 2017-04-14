@@ -6,7 +6,7 @@
     <ul class="lista-fotos">
       <li class="lista-fotos-item" v-for="foto of fotos">
           
-          <meu-painel>
+          <meu-painel :titulo="foto.titulo">
             <img class="imagem-responsiva" v-bind:src="foto.url" v-bind:alt="foto.titulo">
           </meu-painel>
                
@@ -17,7 +17,13 @@
 </template>
 
 <script>
+import Painel from './components/shared/painel/Painel.vue';
+
 export default {
+  components: {
+    'meu-painel': Painel
+  },
+
   data() {
     return{
       
