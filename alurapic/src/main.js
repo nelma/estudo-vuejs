@@ -10,7 +10,7 @@ import { routes } from './routes';
 
 
 // importando diretivas
-import './directives/Transform.js';
+//import './directives/Transform.js';
 
 //registrando o modulo/plugin no global view object
 Vue.use(VueResource);
