@@ -46,6 +46,10 @@ export default {
     text-transform: uppercase;
   }
 
+  .painel-conteudo {
+    overflow: hidden;
+  }
+
   /* colocando todos os elementos do painel com box shadow */
 
   * {

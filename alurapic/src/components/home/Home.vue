@@ -11,7 +11,7 @@
       <li class="lista-fotos-item" v-for="foto of fotosComFiltro">
           
           <meu-painel :titulo="foto.titulo">
-            <imagem-responsiva :url="foto.url" :titulo="foto.titulo" v-meu-transform="{incremento: 15, animacao: true}" />
+            <imagem-responsiva :url="foto.url" :titulo="foto.titulo" v-meu-transform:scale.animacao="1.2" />
             <meu-botao rotulo="remover" 
                        tipo="button" 
                        :confirmacao="true" 
