@@ -36,6 +36,9 @@ import Botao from '../shared/botao/Botao.vue';
 //importando diretivas
 import transform from '../../directives/Transform';
 
+//importando um Servico
+import FotoService from '../../domain/foto/FotoService';
+
 export default {
   components: {
     'meu-painel': Painel,
@@ -49,7 +52,18 @@ export default {
 
   methods: {
     remover(foto) {
-        this.$http.delete(`v1/fotos/${foto._id}`)
+
+        this.service.apaga(foto._id)
+                    .then(() => {
+                      let indice = this.fotos.indexOf(foto);
+                      this.fotos.splice(indice, 1);
+                      this.mensagem = 'Foto removida com sucesso'
+                    }, err => {
+                      this.mensagem = 'Nao foi possivel remover a foto';
+                      console.log(err);
+                    })
+
+        /* this.resource.delete( {id: foto._id})
                   .then(() => {
                     let indice = this.fotos.indexOf(foto);
                     this.fotos.splice(indice, 1);
@@ -57,7 +71,7 @@ export default {
                   }, err => {
                     this.mensagem = 'Nao foi possivel remover a foto';
                     console.log(err);
-                  })
+                  }) */
         
     }
   },
@@ -93,12 +107,14 @@ export default {
   created() {
     //alert("Criei o componente");
 
-    this.resource = this.$resource('vi/fotos{/id}');
+     // criando uma instância do nosso serviço que depende de $resource
+    this.service = new FotoService(this.$resource);
 
-    this.resource
-      .query()
-      .then(res => res.json())
-      .then(fotos => this.fotos = fotos, err => console.log(err));
+    this.service.lista().then(fotos => this.fotos = fotos, err => console.log(err));
+
+    //this.resource = this.$resource('v1/fotos{/id}');
+
+    //this.resource.query().then(res => res.json()).then(fotos => this.fotos = fotos, err => console.log(err));
 
     /*this.$http.get('v1/fotos')
       .then(res => res.json())
