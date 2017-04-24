@@ -3,6 +3,9 @@
   <div>
 
     <h1 class="centralizado">Alurapic</h1>
+
+    <!-- elemento para exibir msg para o usuário -->
+    <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
     
     <input type="search" class="filtro" v-on:input=" filtro = $event.target.value" placeholder="filtre pelo título da foto">
     {{ filtro }}
@@ -46,14 +49,24 @@ export default {
 
   methods: {
     remover(foto) {
-        alert(foto.titulo);
+        this.$http.delete(`v1/fotos/${foto._id}`)
+                  .then(() => {
+                    let indice = this.fotos.indexOf(foto);
+                    this.fotos.splice(indice, 1);
+                    this.mensagem = 'Foto removida com sucesso'
+                  }, err => {
+                    this.mensagem = 'Nao foi possivel remover a foto';
+                    console.log(err);
+                  })
+        
     }
   },
 
   data() {
     return{
       fotos: [],
-      filtro: ''
+      filtro: '',
+      mensagem: ''
     }
   },
 
@@ -80,9 +93,16 @@ export default {
   created() {
     //alert("Criei o componente");
 
-    this.$http.get('http://localhost:3000/v1/fotos')
+    this.resource = this.$resource('vi/fotos{/id}');
+
+    this.resource
+      .query()
       .then(res => res.json())
-      .then(fotinhos => this.fotos = fotinhos, err => console.log(err));
+      .then(fotos => this.fotos = fotos, err => console.log(err));
+
+    /*this.$http.get('v1/fotos')
+      .then(res => res.json())
+      .then(fotinhos => this.fotos = fotinhos, err => console.log(err));*/
   }
 }
 </script>
