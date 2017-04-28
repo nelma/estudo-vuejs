@@ -6,25 +6,30 @@
 
     <!-- elemento para exibir msg para o usuário -->
     <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
-    
+
     <input type="search" class="filtro" v-on:input=" filtro = $event.target.value" placeholder="filtre pelo título da foto">
     {{ filtro }}
 
     <ul class="lista-fotos">
       <li class="lista-fotos-item" v-for="foto of fotosComFiltro">
-          
+
           <meu-painel :titulo="foto.titulo">
             <imagem-responsiva :url="foto.url" :titulo="foto.titulo" v-meu-transform:scale.animacao="1.2" />
-            <meu-botao rotulo="remover" 
-                       tipo="button" 
-                       :confirmacao="true" 
+
+            <router-link :to="{ name: 'altera', params: { id: foto._id } }">
+              <meu-botao rotulo="Alterar" tipo="button" />
+            </router-link>
+
+            <meu-botao rotulo="Remover"
+                       tipo="button"
+                       :confirmacao="true"
                        @botaoAtivado="remover(foto)"
                        estilo="perigo" />
           </meu-painel>
-               
+
       </li>
     </ul>
-     
+
   </div>
 </template>
 
@@ -72,7 +77,7 @@ export default {
                     this.mensagem = 'Nao foi possivel remover a foto';
                     console.log(err);
                   }) */
-        
+
     }
   },
 
