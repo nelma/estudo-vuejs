@@ -4,10 +4,12 @@ import App from './App.vue'
 //importando modulos
 import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
+import VeeValidate from 'vee-validate';
 
 // tem que vir entre chaves, porque não é default
 import { routes } from './routes';
 
+import msg from './pt_BR';
 
 // importando diretivas
 //import './directives/Transform.js';
@@ -15,6 +17,14 @@ import { routes } from './routes';
 //registrando o modulo/plugin no global view object
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(VeeValidate, {
+  locale: 'pt_BR',
+  dictionary: {
+    pt_BR: {
+      messages: msg
+    }
+  }
+});
 
 //roteador
 const router = new VueRouter({

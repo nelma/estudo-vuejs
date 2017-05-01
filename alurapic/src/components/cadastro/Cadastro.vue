@@ -8,12 +8,22 @@
     <form @submit.prevent="grava()">
       <div class="controle">
         <label for="titulo">TÍTULO</label>
-        <input id="titulo" autocomplete="off" v-model.lazy="foto.titulo">
+        <input id="titulo" name="titulo" autocomplete="off" 
+              v-model="foto.titulo"
+              v-validate data-vv-rules="required|min:3|max:30" data-vv-as="título">
+        
+        <span class="erro" v-show="errors.has('titulo')">{{ errors.first('titulo') }}</span>
       </div>
 
       <div class="controle">
         <label for="url">URL</label>
-        <input id="url" autocomplete="off" v-model.lazy="foto.url" @input="foto.url = $event.target.value">
+        <input id="url" name="url" autocomplete="off" 
+          v-model.lazy="foto.url" 
+          @input="foto.url = $event.target.value"
+          v-validate data-vv-rules="required">
+
+        <span class="erro" v-show="errors.has('url')">{{ errors.first('url') }}</span>
+
         <imagem-responsiva v-show="foto.url" :url="foto.url" :titulo="foto.titulo"/>
       </div>
 
@@ -54,13 +64,18 @@ export default {
 
       //$router é o objeto que sabe tudo sobre a navegação e é diferente de $route
 
-      this.service
-        .cadastra(this.foto)
-        .then(() => {
-          if(this.id) this.$router.push({ name: 'home' });
-          this.foto = new Foto()
-        },
-        err => console.log(err));
+      this.$validator.validateAll().then(success => {
+        if(success) {
+          this.service
+              .cadastra(this.foto)
+              .then(() => {
+                if(this.id) this.$router.push({ name: 'home' });
+                this.foto = new Foto()
+              },
+              err => console.log(err));
+          }
+      })
+      
       /* this.resource.save(this.foto)
                 .then(()=> this.foto = new Foto(), err => console.log(err)); */
     }
@@ -111,4 +126,7 @@ export default {
     text-align: center;
   }
 
+  .erro {
+    color: red;
+  }
 </style>
