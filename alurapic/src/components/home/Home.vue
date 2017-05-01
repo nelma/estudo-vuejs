@@ -64,8 +64,7 @@ export default {
                       this.fotos.splice(indice, 1);
                       this.mensagem = 'Foto removida com sucesso'
                     }, err => {
-                      this.mensagem = 'Nao foi possivel remover a foto';
-                      console.log(err);
+                      this.mensagem = err.message;
                     })
 
         /* this.resource.delete( {id: foto._id})
@@ -110,18 +109,24 @@ export default {
   },
 
   created() {
-    //alert("Criei o componente");
-
-     // criando uma instância do nosso serviço que depende de $resource
+    // criando uma instância do nosso serviço que depende de $resource
     this.service = new FotoService(this.$resource);
+    this.service.lista()
+                  .then(
+                      fotos => this.fotos = fotos, 
+                      err => {
+                        console.log(err);
+                        this.mensagem = err.message;
+                      }
+                  );
 
-    this.service.lista().then(fotos => this.fotos = fotos, err => console.log(err));
 
-    //this.resource = this.$resource('v1/fotos{/id}');
 
-    //this.resource.query().then(res => res.json()).then(fotos => this.fotos = fotos, err => console.log(err));
+    /*this.resource = this.$resource('v1/fotos{/id}');
 
-    /*this.$http.get('v1/fotos')
+    this.resource.query().then(res => res.json()).then(fotos => this.fotos = fotos, err => console.log(err));
+
+    this.$http.get('v1/fotos')
       .then(res => res.json())
       .then(fotinhos => this.fotos = fotinhos, err => console.log(err));*/
   }
