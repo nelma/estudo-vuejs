@@ -11,6 +11,13 @@ import { routes } from './routes';
 
 import msg from './pt_BR';
 
+
+//importando o CSS dentro do node_modules
+import 'bootstrap/dist/css/bootstrap.css';
+
+import './assets/css/teste.css';
+
+
 // importando diretivas
 //import './directives/Transform.js';
 
