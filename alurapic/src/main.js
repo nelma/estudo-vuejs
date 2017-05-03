@@ -11,11 +11,12 @@ import { routes } from './routes';
 
 import msg from './pt_BR';
 
-
-//importando o CSS dentro do node_modules
+//importando o CSS/JS dentro do node_modules
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 
 import './assets/css/teste.css';
+import './assets/js/teste.js';
 
 
 // importando diretivas
@@ -39,7 +40,8 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-Vue.http.options.root = 'http://localhost:3000';
+Vue.http.options.root = process.env.API_URL ? process.env.API_URL : 'http://localhost:3000';
+
 
 new Vue({
   el: '#app',
