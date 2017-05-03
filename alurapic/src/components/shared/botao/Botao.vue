@@ -47,7 +47,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="sass">
     @import './Botao.scss';
 </style>
 
