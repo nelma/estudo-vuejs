@@ -42,6 +42,16 @@ const router = new VueRouter({
 
 Vue.http.options.root = process.env.API_URL ? process.env.API_URL : 'http://localhost:3000';
 
+/*Vue.http.interceptors.push((req, next) => {
+  req.headers.set('Authorization', 'informacao de seguranca');
+  console.log('Lidando com request');
+
+  next(res => {
+      console.log('Lidando com a resposta')
+      // é possível acessar os dados da reposta e realizar transformações antes
+      console.log(res.body);
+  });
+})*/
 
 new Vue({
   el: '#app',
